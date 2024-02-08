@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('customers/{id}', [CustomerController::class, 'show']);
 Route::post('customers', [CustomerController::class, 'create']);
@@ -31,3 +31,12 @@ Route::post('customers/{customer_id}/notes', [NoteController::class, 'create']);
 Route::patch('customers/{customer_id}/notes/{id}', [NoteController::class, 'update']);
 Route::delete('customers/{customer_id}/notes/{id}', [NoteController::class, 'delete']);
 Route::get('customers/{customer_id}/notes', [NoteController::class, 'index']);
+
+//Route::get('customers/{customer_id}/projects/{id}', [ProjectController::class, 'show']);
+Route::post('customers/{customer_id}/projects', [ProjectController::class, 'createProject']);
+Route::patch('customers/{customer_id}/projects/{id}', [ProjectController::class, 'updateProject']);
+//Route::delete('customers/{customer_id}/projects/{id}', [ProjectController::class, 'delete']);
+//Route::get('customers/{customer_id}/projects', [ProjectController::class, 'index']);
+});
+
+Route::post('users', [UserController::class, 'create']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Crm\Customer\Requests\CreateCustomer;
+use Crm\Customer\Requests\UpdateCustomer;
 use Crm\Customer\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,14 +22,14 @@ class CustomerController
     }
 
     public function show($id) {
-        return $this->customerService->show($id);
+        return $this->customerService->show($id) ?? response()->json(['status' => 'not found'], Response::HTTP_NOT_FOUND);
     }
 
     public function create(CreateCustomer $request) {
-        return $this->customerService->create($request);
+        return $this->customerService->create($request->name);
     }
 
-    public function update(Request $request, $id) {
+    public function update(UpdateCustomer $request, $id) {
         return $this->customerService->update($request, $id);
     }
 

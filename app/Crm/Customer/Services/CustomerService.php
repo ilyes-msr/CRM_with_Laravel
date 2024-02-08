@@ -5,6 +5,7 @@ namespace Crm\Customer\Services;
 use Crm\Customer\Events\CustomerCreation;
 use Crm\Customer\Requests\CreateCustomer;
 use Crm\Customer\Models\Customer;
+use Crm\Customer\Requests\UpdateCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -16,12 +17,12 @@ class CustomerService
 
     public function show($id) {
         $customer = Customer::find($id);
-        return $customer ?? response()->json(['status' => 'not found'], Response::HTTP_NOT_FOUND);
+        return $customer;
     }
 
-    public function create(CreateCustomer $request) {
+    public function create(string $name) {
         $customer = new Customer();
-        $customer->name = $request->get("name");
+        $customer->name = $name;
         $customer->save();
 
         event(new CustomerCreation($customer));
@@ -29,7 +30,7 @@ class CustomerService
         return $customer;
     }
 
-    public function update(Request $request, $id) {
+    public function update(UpdateCustomer $request, $id) {
         $customer = Customer::find($id);
         if(!$customer) {
             return response()->json(['status' => 'not found'], Response::HTTP_NOT_FOUND);

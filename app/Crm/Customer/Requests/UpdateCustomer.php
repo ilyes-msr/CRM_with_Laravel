@@ -4,7 +4,7 @@ namespace Crm\Customer\Requests;
 
 use Crm\Base\Requests\ApiRequest;
 
-class CreateCustomer extends ApiRequest
+class UpdateCustomer extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
